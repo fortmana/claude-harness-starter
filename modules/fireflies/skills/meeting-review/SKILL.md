@@ -60,17 +60,19 @@ Fireflies `ai_summary` only as a cross-check, never as the sole source.
 date: YYYY-MM-DD
 type: meeting
 meeting_type: <one of the types above>
+client: <client shortname or internal>
+project: <project or blank>
 meeting_title: <title>
 organizer: <organizer>
 duration: <Xh Ym>
 participants: <comma-separated names>
 source: fireflies
 transcript_id: <id>
-tags: [type/meeting, source/meeting-transcript, status/active]
+tags: [type/meeting, source/meeting-transcript, client/<shortname or internal>, status/active]
 ---
 ```
 
-Follow the `obsidian-note-router` skill's conventions for naming and tags when it is installed.
+Follow the `obsidian-note-router` skill's conventions for naming and tags when it is installed. Where the frontmatter above and the router's differ, the frontmatter above wins; it is a superset, so client and project queries still find these notes.
 
 ## Workflow
 

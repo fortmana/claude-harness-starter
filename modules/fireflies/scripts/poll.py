@@ -175,6 +175,8 @@ def main() -> int:
 
     cfg = load_config()
     state: Path = cfg["_state"]
+    # Require the key before creating any folders or log files, so a bad setup writes nothing.
+    key = None if args.exclude else require_secret("fireflies_api_key", "FIREFLIES_API_KEY")
     log = setup_logging(state)
     pending, checkpoint, excl_path = state / "pending", state / "last_run.json", state / "excluded_ids.json"
 
@@ -183,7 +185,6 @@ def main() -> int:
         log.info("Excluded %s permanently", args.exclude)
         return 0
 
-    key = require_secret("fireflies_api_key", "FIREFLIES_API_KEY")
     excluded = load_excluded(excl_path)
     skip_patterns = [p.lower() for p in cfg.get("skip_title_patterns", [])]
     my_email = cfg.get("my_email", "")

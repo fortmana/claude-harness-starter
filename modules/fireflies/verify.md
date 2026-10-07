@@ -1,17 +1,19 @@
 # fireflies — verify
 
-Report pass/fail honestly. Start a **new** Claude Code session first so the skill and CLAUDE.md block are loaded.
+Report pass/fail honestly.
 
-## Checks Claude can run
+## File checks (run right after install, before restarting)
 
 1. `poll.py` and `harness_secrets.py` exist in the state directory, and `python -c "import requests, keyring"` succeeds.
 2. `~/.claude-harness/fireflies.toml` exists and `my_email` is set (warn if not).
 3. `~/.claude/skills/meeting-review/SKILL.md` exists with no unreplaced `{{...}}` placeholders.
 4. The CLAUDE.md block was added and has no unreplaced placeholders.
-5. The API key exists, without printing it: `python harness_secrets.py check fireflies_api_key`.
+5. **Pause until the user confirms they stored the key themselves** (see `MODULE.md`). Then check it exists without printing it: `<python> harness_secrets.py check fireflies_api_key`.
 6. Dry run against the real API (safe, saves nothing): `python poll.py --dry-run`. Pass = it lists meetings or reports zero without an error. A 401 means the key is wrong; tell the user to re-run `harness_secrets.py set` themselves.
 
-## Skill test on a sample (no API needed)
+## Behavior checks (after the user starts a new Claude Code session)
+
+The skill and CLAUDE.md block only load in a new session. No API key is needed for this test.
 
 1. Copy `samples/sample_transcript.json` into `<state_dir>/pending/`.
 2. Ask: "Process my pending meetings."

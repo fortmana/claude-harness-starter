@@ -37,7 +37,7 @@ subfolder, never the whole drive.
 
 ## Routing (first match wins)
 
-1. Meeting -> `50 - Meetings`
+1. Meeting -> `50 - Meetings` (if the `meeting-review` skill is installed, use its destination and frontmatter rules for meetings)
 2. About a specific person -> `60 - People`
 3. Quick, time-sensitive capture with no clear home -> `70 - Daily Notes`
 4. Reusable technical lesson or pattern -> `40 - Reference/{Topic}`

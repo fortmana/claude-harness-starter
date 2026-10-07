@@ -8,7 +8,7 @@ Opt-in starter modules for getting useful Claude Code setups running quickly. Pi
 2. Clone this repo and open Claude Code in it.
 3. Tell Claude: **"Follow BOOTSTRAP.md."**
 
-Claude asks which modules you want, shows exactly what it will change, and only then installs them.
+Claude asks which modules you want, interviews you once, shows exactly what it will change, and only then installs them. Some modules depend on others (for example `fireflies` writes into the `obsidian-memory` vault); Claude will offer to add what is needed.
 
 ## Modules
 
@@ -31,4 +31,4 @@ API keys never go into Claude. See [SECURITY.md](SECURITY.md) before setting up 
 
 ## Contributing / maintaining
 
-Run `python tools/validate_manifests.py` and `python tools/check_generic.py` before committing. The repo must contain no personal, client, or company-specific values.
+Run `pip install -r tools/requirements.txt`, then `python tools/validate_manifests.py` and `python tools/check_generic.py` before committing. The repo must contain no personal, client, or company-specific values.

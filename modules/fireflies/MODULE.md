@@ -25,20 +25,24 @@ Polls the Fireflies API for new transcripts, saves each locally as a JSON packag
 
 ## What it changes on your machine
 
-- Creates a state folder (default `~/.claude-harness/fireflies/`) containing `poll.py`, `harness_secrets.py`, `pending/`, `processed/`, `last_run.json`, `excluded_ids.json`, and `poll.log`.
+- Creates a **state folder** (where Claude keeps the scripts and downloaded transcripts; default `~/.claude-harness/fireflies/`) containing `poll.py`, `harness_secrets.py`, `pending/`, `processed/`, `last_run.json`, `excluded_ids.json`, and `poll.log`.
 - Writes `~/.claude-harness/fireflies.toml` with your interview settings (no secrets).
 - Installs Python packages from `requirements.txt` (`requests`, `keyring`).
 - Copies one skill folder to `~/.claude/skills/meeting-review/` with your answers filled in.
 - Appends one block to the CLAUDE.md file you choose.
 - Stores your API key in the OS credential store under service `claude-harness`, name `fireflies_api_key`. You do this yourself; see below.
-- **Opt-in only:** a Windows scheduled task `ClaudeHarness-FirefliesPoll` that runs `poll.py` on an interval. Not created unless you say yes.
+- **Opt-in only:** `schedule_windows.ps1` is copied, and a Windows scheduled task `ClaudeHarness-FirefliesPoll` is created, only if you say yes to scheduled polling. Otherwise neither is created.
 
 ## Setup notes
 
 **Getting and storing your API key (never paste it into Claude)**
 
 1. Sign in at app.fireflies.ai, open **Settings**, then the **MCP & API** screen, and copy your API key.
-2. In **your own terminal** (not through Claude), run: `python harness_secrets.py set fireflies_api_key` from the state folder, and paste the key at the hidden prompt.
+2. In **your own terminal** (not through Claude), run the command Claude gives you with your real paths. It looks like this:
+   - PowerShell: `cd $HOME\.claude-harness\fireflies; <python> -m pip install -r requirements.txt; <python> harness_secrets.py set fireflies_api_key`
+   - macOS/Linux: `cd ~/.claude-harness/fireflies && <python> -m pip install -r requirements.txt && <python> harness_secrets.py set fireflies_api_key`
+   
+   Paste the key at the hidden prompt. Use the **same Python** that Claude recorded as `python` in `fireflies.toml`, because `poll.py` and the scheduled task must use the interpreter that has `keyring` installed.
 3. If you pasted the key anywhere else (a chat, a file), generate a new key in Fireflies and update the stored one.
 
 BOOTSTRAP copies `core/secrets/harness_secrets.py` into the state folder next to `poll.py` because the module declares a secret.
@@ -48,7 +52,7 @@ BOOTSTRAP copies `core/secrets/harness_secrets.py` into the state folder next to
 **Sensitive content.** Transcripts may contain client-confidential or regulated data. Check your organization's policy before processing them, and keep outputs in locations you are approved to use.
 
 **Scheduling (optional).**
-- Windows: `schedule_windows.ps1 -ScriptDir <state folder> -IntervalMinutes 60`. Remove with `-Remove`.
+- Windows: `schedule_windows.ps1 -ScriptDir <state folder> -Python <recorded python> -IntervalMinutes 60`. Remove with `-Remove`.
 - macOS/Linux: add a cron entry such as `0 * * * * /usr/bin/python3 ~/.claude-harness/fireflies/poll.py` (or a launchd job). Cron jobs cannot always reach the keyring; if so, set `FIREFLIES_API_KEY` in the job's environment through your OS's secure mechanism instead of a plain file.
 - Only polling is scheduled. Run "process my meetings" in a Claude Code session to turn pending transcripts into notes.
 - Unattended processing with `claude -p` is possible but out of scope for v0.1; it requires granting write permissions to a headless session, so treat it as an advanced, explicit opt-in.

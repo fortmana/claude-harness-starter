@@ -15,6 +15,7 @@ param(
     [string]$ScriptDir = "$HOME\.claude-harness\fireflies",
     [int]$IntervalMinutes = 60,
     [string]$TaskName = "ClaudeHarness-FirefliesPoll",
+    [string]$Python = "",   # full path to the interpreter recorded in fireflies.toml; defaults to python on PATH
     [switch]$Remove
 )
 
@@ -32,7 +33,7 @@ if ($Remove) {
 
 $poll = Join-Path $ScriptDir "poll.py"
 if (-not (Test-Path $poll)) { throw "poll.py not found in $ScriptDir" }
-$python = (Get-Command python -ErrorAction Stop).Source
+$python = if ($Python) { $Python } else { (Get-Command python -ErrorAction Stop).Source }
 
 $action  = New-ScheduledTaskAction -Execute $python -Argument "`"$poll`"" -WorkingDirectory $ScriptDir
 $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) `
