@@ -1,0 +1,14 @@
+# One regex per line. Matches are case-insensitive. Add values as you discover them.
+accordion
+fortman
+pinnacle
+adventist
+crmc
+hakala
+jacobsen
+afshar
+OneDrive -
+C:\\Users\\[A-Za-z]
+/Users/[a-z]+/
+@accordion\.com
+keyring\.get_password\(\s*['"]ncc['"]
