@@ -1,0 +1,17 @@
+{
+  "id": "sample-0001",
+  "title": "Project Falcon weekly status",
+  "date": "2026-03-10",
+  "duration_seconds": 1800,
+  "organizer": "organizer@example.com",
+  "attendees": ["Dana Reyes <organizer@example.com>", "Sam Ortiz <sam@example.com>", "Priya Nair <priya@example.com>"],
+  "transcript_text": "Dana Reyes: Let's start with the data migration. Sam, where are we?\nSam Ortiz: We finished the staging load. The production cutover is blocked until the vendor confirms the schema change.\nDana Reyes: Okay. Priya, can you chase the vendor for a confirmation by end of week?\nPriya Nair: Yes, I'll email them today and update the thread by Friday.\nDana Reyes: Good. We also need to decide on the reporting tool. I'm leaning toward keeping the current one for phase one.\nSam Ortiz: Agreed. Switching now adds risk to the timeline.\nDana Reyes: Then it's decided: we keep the current reporting tool for phase one and revisit in phase two.\nDana Reyes: One more thing, the training budget isn't approved yet. Let's park that until next month's planning meeting.\nSam Ortiz: Sounds good. I'll draft the cutover checklist by next Wednesday.",
+  "ai_summary": {
+    "gist": "Migration blocked on vendor schema confirmation; reporting tool stays for phase one.",
+    "action_items": "Priya to chase vendor; Sam to draft cutover checklist.",
+    "short_summary": "",
+    "keywords": "migration, vendor, reporting tool, training budget",
+    "overview": ""
+  },
+  "source": "fireflies"
+}
