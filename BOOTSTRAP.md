@@ -16,8 +16,8 @@ You are setting up one or more modules from this repo for the user. Follow these
 2. **Choose modules.** List modules from `modules/*/MODULE.md` (skip `_template`). Ask which the user wants (multi-select). For each selection, read its `requires_modules`; if a required module is not selected, explain why and offer to add it.
 3. **Check prerequisites.** For each selected module, compare `prerequisites` and `python_packages` against what step 1 found. List what is missing.
 4. **Interview.** For each selected module that declares an `interview` file, ask those questions (batch them in one message where possible). Save answers to `~/.claude-harness/<module>.toml`.
-5. **Show the plan and get approval.** Present, per module: packages to install, files to create, skills to copy into `~/.claude/skills`, CLAUDE.md blocks to append, scheduled tasks to register, and secrets the module needs (names only). Mark scheduled tasks and settings edits as separate opt-ins. Wait for approval.
-6. **Execute** only the approved steps for the selected modules.
+5. **Show the plan and get approval.** Present, per module: packages to install, files to create, skills to copy into `~/.claude/skills`, templates, CLAUDE.md blocks to append, scheduled tasks to register, and secrets the module needs (names only). Mark scheduled tasks and settings edits as separate opt-ins. Wait for approval.
+6. **Execute** only the approved steps for the selected modules. Fill every `{{PLACEHOLDER}}` in a module's skill and CLAUDE.md block from the interview answers before copying; never copy a file that still contains `{{...}}`. Copy `templates/` files to wherever the module's `MODULE.md` says.
 7. **Verify.** Run each module's `verify` steps. Report pass/fail honestly; do not claim success on a failed check.
 8. **Record.** Write `~/.claude-harness/installed.json` with module names, versions, and install date so later "add module" runs know what is present.
 9. **Tell the user** to start a new Claude Code session (skills and CLAUDE.md load at session start) and point them to each module's "How to remove it" section.

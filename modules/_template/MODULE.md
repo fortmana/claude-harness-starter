@@ -10,6 +10,7 @@ secrets: []                # names only, never values, e.g. [example_api_key]
 installs:
   skills: []               # folders under this module's skills/ copied to ~/.claude/skills
   claude_md_blocks: []     # files under this module's claude-md/ appended on opt-in
+  templates: []            # files under this module's templates/ (e.g. note templates)
   scripts: []              # files under this module's scripts/
   scheduled_tasks: []      # always requires explicit opt-in
 interview: interview.md    # questions that parameterize the module (or omit)

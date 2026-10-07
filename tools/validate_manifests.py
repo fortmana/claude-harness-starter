@@ -25,7 +25,8 @@ REQUIRED = {
     "secrets": list,
     "installs": dict,
 }
-INSTALL_KEYS = {"skills", "claude_md_blocks", "scripts", "scheduled_tasks"}
+INSTALL_KEYS = {"skills", "claude_md_blocks", "templates", "scripts", "scheduled_tasks"}
+PLACEHOLDER = re.compile(r"\{\{([A-Z_]+)\}\}")
 STATUSES = {"planned", "alpha", "stable"}
 REQUIRED_SECTIONS = ["What it does", "What it changes on your machine", "How to remove it"]
 SECRET_LIKE = re.compile(r"(sk-[A-Za-z0-9]{10,}|[A-Fa-f0-9]{32,}|Bearer\s+\S+)")
@@ -76,6 +77,27 @@ def check(path: Path, all_names: set[str]) -> list[str]:
         for ref in ("interview", "verify"):
             if meta.get(ref) and not (mod_dir / meta[ref]).exists():
                 errs.append(f"'{ref}' file '{meta[ref]}' not found")
+        inst = meta["installs"]
+        for skill in inst.get("skills", []):
+            if not (mod_dir / "skills" / skill / "SKILL.md").exists():
+                errs.append(f"skill '{skill}' missing skills/{skill}/SKILL.md")
+        for blk in inst.get("claude_md_blocks", []):
+            if not (mod_dir / "claude-md" / blk).exists():
+                errs.append(f"claude_md_block '{blk}' missing in claude-md/")
+        for tpl in inst.get("templates", []):
+            if not (mod_dir / "templates" / tpl).exists():
+                errs.append(f"template '{tpl}' missing in templates/")
+        for scr in inst.get("scripts", []):
+            if not (mod_dir / "scripts" / scr).exists():
+                errs.append(f"script '{scr}' missing in scripts/")
+        # every {{PLACEHOLDER}} used by the module must be defined in the interview
+        interview = (mod_dir / meta["interview"]).read_text(encoding="utf-8") if meta.get("interview") else ""
+        used = set()
+        for f in list((mod_dir / "skills").rglob("*.md")) + list((mod_dir / "claude-md").glob("*.md")):
+            used |= set(PLACEHOLDER.findall(f.read_text(encoding="utf-8")))
+        for ph in sorted(used):
+            if "{{" + ph + "}}" not in interview:
+                errs.append(f"placeholder {{{{{ph}}}}} is used but not defined in {meta.get('interview', 'an interview')}")
     return [f"{path}: {e}" for e in errs]
 
 

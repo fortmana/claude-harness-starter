@@ -14,7 +14,7 @@ Claude asks which modules you want, shows exactly what it will change, and only 
 
 | Module | What it gives you | Status |
 |---|---|---|
-| [`obsidian-memory`](modules/obsidian-memory/MODULE.md) | An Obsidian vault Claude writes to, tags, files, and retrieves from consistently | Planned |
+| [`obsidian-memory`](modules/obsidian-memory/MODULE.md) | An Obsidian vault Claude writes to, tags, files, and retrieves from consistently | Alpha |
 | [`fireflies`](modules/fireflies/MODULE.md) | Poll Fireflies transcripts and turn them into standardized notes that match what matters to you | Planned |
 
 More modules will be added over time. Each is self-contained, documents what it changes on your machine, and explains how to remove it.
