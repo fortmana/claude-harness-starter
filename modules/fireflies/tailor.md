@@ -11,7 +11,7 @@ If they decline, stop. The default skill is already installed and working. Menti
 ## 1. Show the default
 
 1. Pick the input, in this order: a real meeting waiting in `<state_dir>/pending/`, otherwise (if the key is stored and they agree) run `poll.py` and use the most recent meeting, otherwise `samples/sample_transcript.json`.
-2. Following the installed `meeting-review` skill, write the note **inline in chat only** (do not file it or move the package).
+2. Following the installed `meeting-review` skill, write the note **inline in chat only** (do not file it or move the package). You are rendering the preview by hand from the skill's rules; that is expected. If you are using the built-in sample, treat it as a client meeting so every default section appears (including Risks), and say so; otherwise tell the user which sections appear only for certain meeting types.
 3. Say, in one or two sentences, what you did and what the note is made of. Then ask: **"What would you change?"** Leave it open.
 
 ## 2. Iterate
@@ -33,7 +33,7 @@ When they approve:
 
 1. Update the matching values in `[placeholders]` (and `skip_title_patterns` in `[settings]` if skip words changed) in `~/.claude-harness/fireflies.toml`.
 2. Re-fill the skill from `skills/meeting-review/SKILL.md` with `core/tools/fill_placeholders.py` and replace the installed copy. Read it back to confirm the change is present.
-3. If they added a new meeting type or section, make sure `MEETING_TYPES` and `OUTPUT_SECTIONS` stay consistent with each other.
+3. Keep the values consistent with each other: check `MEETING_TYPES`, `OUTPUT_SECTIONS`, and the other rules (`STYLE_RULES`, `SKIP_RULES`, and so on) for any mention of what you changed (for example a summary length), and fix contradictions. For a "my action items" section, ask once how their name appears in transcripts, match owners on that, and write an empty-case line such as "Nothing for you."
 4. Tell them what changed in one or two lines and that it applies from the next new session.
 
 ## Notes

@@ -10,7 +10,7 @@ Opt-in starter modules for getting useful Claude Code setups running quickly. Pi
 
 See [docs/example-session.md](docs/example-session.md) for what the conversation looks like.
 
-Claude asks which modules you want, interviews you once, shows exactly what it will change, and only then installs them. Some modules depend on others (for example `fireflies` writes into the `obsidian-memory` vault); Claude will offer to add what is needed.
+Claude asks which modules you want, asks a couple of short questions, shows exactly what it will change, and only then installs them. Some modules depend on others (for example `fireflies` writes into the `obsidian-memory` vault); Claude will offer to add what is needed.
 
 ## Modules
 

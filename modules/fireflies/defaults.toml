@@ -26,7 +26,7 @@ DATE_RULES = "Convert relative date phrases to `YYYY-MM-DD` anchored to the meet
 
 PEOPLE_RULES = "Label speakers who cannot be identified as \"Unidentified speaker\" and mark any identification you infer from context with \"(inferred)\"."
 
-STYLE_RULES = "Terse bullets with no filler; the summary is three plain sentences."
+STYLE_RULES = "Terse bullets with no filler."
 
 SKIP_RULES = "No meetings are skipped by default."
 

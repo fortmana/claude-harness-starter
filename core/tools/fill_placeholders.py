@@ -30,7 +30,7 @@ def main(argv: list[str]) -> int:
     filled = TOKEN.sub(lambda m: str(values[m.group(1)]).strip(), text)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(filled, encoding="utf-8")
-    print(f"Wrote {out}")
+    print(f"Wrote {out.as_posix()}")
     return 0
 
 

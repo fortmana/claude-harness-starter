@@ -23,7 +23,7 @@ verify: verify.md
 
 ## What it does
 
-Polls the Fireflies API for new transcripts, saves each locally as a JSON package, and processes them through a `meeting-review` skill that ships with a sensible default summary (three-sentence summary, decisions, action items, risks for client meetings, parking lot). Setup asks one question (your email). Afterward Claude offers an optional conversation to tailor the summary: it shows the default on one of your real meetings and you say what to change. Processing runs inside Claude Code, so no separate Anthropic API key is needed.
+Polls the Fireflies API for new transcripts, saves each locally as a JSON package, and processes them through a `meeting-review` skill that ships with a sensible default summary (three-sentence summary, decisions, action items, risks for client meetings, parking lot). Setup asks one question (your email). Afterward Claude offers an optional conversation to tailor the summary: it shows the default on one of your real meetings (or a built-in sample if you have none yet) and you say what to change. Processing runs inside Claude Code, so no separate Anthropic API key is needed.
 
 ## What it changes on your machine
 

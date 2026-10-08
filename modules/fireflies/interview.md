@@ -8,7 +8,7 @@ Ask only this. Everything else comes from `defaults.toml`; do not ask about meet
 
 - `{{STATE_DIR}}` and `state_dir`: `~/.claude-harness/fireflies` resolved to an absolute path with forward slashes. Tell the user where it is; do not ask.
 - `python` in `[settings]`: the interpreter recorded in BOOTSTRAP step 1.
-- `{{SENSITIVITY_RULES}}`: if `obsidian-memory` is installed or selected, copy its value into this module's `[placeholders]`; otherwise use the default.
+- `{{SENSITIVITY_RULES}}`: use the default. Only if `obsidian-memory` was installed earlier with a customized value, copy that value into this module's `[placeholders]` instead.
 
 ## Placeholder formats (used by `defaults.toml` and when tailoring)
 
