@@ -24,4 +24,6 @@ Ask these in one batch. Save the answers to `~/.claude-harness/obsidian-memory.t
 | `REFERENCE_TOPICS` | Comma-separated | `Denials, Excel tips, Python` |
 | `SENSITIVITY_RULES` | One sentence ending with a period | `Anything with patient information or client financials.` |
 
+`[settings]` for this module has no required keys. Client folders use the full name (`Acme Health`); `client:` frontmatter and `client/...` tags use the lowercase shortname (`acme`).
+
 Defaults when the user has no preference: tags `client/internal`, no seeded projects, no tool tags, sensitivity "client-confidential or personal data".

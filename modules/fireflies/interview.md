@@ -9,7 +9,7 @@ Save answers to `~/.claude-harness/fireflies.toml` (config values) and keep the 
 1. **Your email address** — used to keep only meetings you organized or attended. Strongly recommended: the API can return transcripts from other people's meetings. -> `my_email` in the toml.
 2. **How far back on the first run?** Default 7 days. -> `lookback_days`.
 3. **Meetings to skip entirely?** Words in titles to ignore (for example "lunch", "interview", "personal"). -> `skip_title_patterns` in the toml and `{{SKIP_RULES}}` (a sentence naming the same rules, plus any content-based rules such as "skip meetings with no business content").
-4. **Where should state live?** Default `~/.claude-harness/fireflies`. -> `state_dir` in the toml and `{{STATE_DIR}}` (use the resolved path).
+4. **State folder.** Do not ask. Use `~/.claude-harness/fireflies` (resolved to an absolute path, forward slashes) and tell the user where it is. -> `state_dir` in the toml and `{{STATE_DIR}}`.
 
 ## Part 2: What matters to you
 
@@ -28,7 +28,7 @@ Save answers to `~/.claude-harness/fireflies.toml` (config values) and keep the 
    - Anything specific to their work (for example billing implications, scope changes, system or data issues)
 
    -> `{{OUTPUT_SECTIONS}}` as a numbered list. For each section give its heading, exactly what to include, the format (for example `- [Owner] — [Action] — [Due]`), and what to write when empty (for example "No action items recorded."). Note which sections apply only to certain meeting types.
-7. **Dates.** Do people say "EOW", "next week", "by Thursday"? Should those be converted to calendar dates anchored to the meeting date, and in what format? -> `{{DATE_RULES}}`. Default: convert relative phrases to `YYYY-MM-DD` anchored to the meeting date and keep the speaker's exact phrase in quotes. "EOD"/"today" = meeting date; "EOW"/"by Friday" = that week's Friday; "by <weekday>" or "<weekday>" = the nearest upcoming one; "next <weekday>" = that weekday in the following calendar week (Monday to Sunday); "end of month" = last business day of the month. If a date is unclear, write "date unclear — confirm".
+7. **Dates.** Do people say "EOW", "next week", "by Thursday"? Should those be converted to calendar dates anchored to the meeting date, and in what format? -> `{{DATE_RULES}}`. Default: convert relative phrases to `YYYY-MM-DD` anchored to the meeting date and keep the speaker's exact phrase in quotes. "EOD"/"today" = meeting date; "EOW"/"by Friday" = that week's Friday; "by <weekday>" or "<weekday>" = the nearest upcoming one; "next <weekday>" = that weekday in the following calendar week (Monday to Sunday); "end of month" = last business day of the month. Vague references with no calendar anchor ("next month", "soon", "after the holidays") are not converted: write the phrase and "date unclear — confirm".
 8. **People.** Fireflies often labels speakers "Speaker 1". How should unknown speakers be handled (label as "Unidentified speaker", infer from context and mark "(inferred)")? Are there names or nicknames Claude should know? -> `{{PEOPLE_RULES}}`.
 9. **Style.** Length and tone (terse bullets, short paragraphs), anything to avoid. -> `{{STYLE_RULES}}`.
 
@@ -57,7 +57,7 @@ Save answers to `~/.claude-harness/fireflies.toml` (config values) and keep the 
 | `TAG_RULES` | One sentence ending with a period |
 | `SENSITIVITY_RULES` | One sentence ending with a period |
 
-Config values (`my_email`, `lookback_days`, `skip_title_patterns`, `state_dir`, `python`) go in `[settings]`.
+Required `[settings]` keys for this module: `my_email`, `lookback_days`, `skip_title_patterns`, `state_dir`, `python` (forward-slash path to the interpreter). `NOTES_FOLDER` uses the client's full name for folders (for example `Acme Health`); the `client:` frontmatter value and tags use the lowercase shortname (for example `acme`).
 
 ## After the interview
 

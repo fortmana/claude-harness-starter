@@ -51,7 +51,7 @@ Fireflies `ai_summary` only as a cross-check, never as the sole source.
 ## Where notes go
 
 - Meeting notes: `{{NOTES_FOLDER}}` as `YYYY-MM-DD <Meeting title>.md`.
-- Raw transcript: {{RAW_TRANSCRIPT_RULE}}
+- Raw transcript: {{RAW_TRANSCRIPT_RULE}} When kept, name it `<same name as the meeting note> - Transcript.md`, put the package's `transcript_text` in it **verbatim** under a short frontmatter (`date`, `type: transcript`, `meeting_title`, `transcript_id`, `tags: [type/note, source/meeting-transcript]`), and link the two notes to each other with `[[wikilinks]]` (the meeting note starts with `Transcript: [[...]]`).
 - Tags: {{TAG_RULES}}
 - Frontmatter on every note:
 
