@@ -4,7 +4,7 @@ version: 0.1.0
 status: alpha
 summary: An Obsidian vault Claude writes to, tags, files, and retrieves from consistently
 requires_modules: []
-prerequisites: []
+prerequisites: [python>=3.11]
 python_packages: []
 secrets: []
 installs:
@@ -23,7 +23,7 @@ verify: verify.md
 
 ## What it does
 
-Sets up a vault folder skeleton, a note-router skill that classifies, tags, names, and files notes, and a CLAUDE.md block with capture and retrieval rules. Claude uses its built-in file tools, so no MCP server, Node.js, or Python is required. Writes are autonomous: Claude reports the path and tags afterward and confirms only before overwriting or deleting a note.
+Sets up a vault folder skeleton, a note-router skill that classifies, tags, names, and files notes, and a CLAUDE.md block with capture and retrieval rules. Claude uses its built-in file tools afterward, so no MCP server or Node.js is needed; Python is used only by the setup helper scripts. Writes are autonomous: Claude reports the path and tags afterward and confirms only before overwriting or deleting a note.
 
 Setup asks one question (where the vault lives) and uses defaults for everything else. Afterward Claude offers an optional conversation to tailor the vault: it shows the default structure and you say what to change.
 
@@ -41,9 +41,9 @@ Nothing else changes. No scheduled tasks, settings edits, packages, or secrets.
 ## Setup notes
 
 1. Install Obsidian from obsidian.md and create (or choose) a vault; open it once so Obsidian initializes it.
-2. Ask the base question in `interview.md` (vault location); take everything else from `defaults.toml`. Fill the `{{PLACEHOLDERS}}` in the skill and CLAUDE.md block.
-3. Create missing folders and copy templates from `templates/` into `80 - Templates`.
-4. Show the user the install plan, then copy the skill and append the CLAUDE.md block.
+2. Ask the base question in `interview.md` (vault location); take everything else from `defaults.toml`.
+3. Show the user the install plan and wait for approval (BOOTSTRAP step 5). Nothing is written before this.
+4. After approval: fill the `{{PLACEHOLDERS}}`, create any missing vault folders, copy templates from `templates/` into `80 - Templates`, copy the skill, and append the CLAUDE.md block. The default folders are `00 - Inbox`, `10 - Clients`, `20 - Internal`, `30 - Projects`, `40 - Reference`, `50 - Meetings`, `60 - People`, `70 - Daily Notes`, `80 - Templates`, `99 - Archive`.
 5. Recommend a backup: the Obsidian Git plugin or a Git repo in the vault folder, since Claude can edit many files at once.
 6. Run `verify.md` in a new session, then offer the optional tailoring conversation (`tailor.md`).
 

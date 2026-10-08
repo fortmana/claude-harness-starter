@@ -1,3 +1,4 @@
+<!-- claude-harness:obsidian-memory:start -->
 ## Obsidian Vault
 
 Vault: {{VAULT_PATH}}
@@ -18,3 +19,4 @@ Before answering a question about past work, decisions, people, or projects:
 ### Safety
 - Never run recursive searches from the drive root, a cloud-sync root, or the Documents folder. Always scope to a specific vault subfolder.
 - Flag sensitive content (see the router skill) before storing it.
+<!-- claude-harness:obsidian-memory:end -->

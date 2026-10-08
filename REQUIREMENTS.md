@@ -8,7 +8,7 @@ What you need before running `BOOTSTRAP.md`, and what each module adds. Windows 
 |---|---|---|---|
 | **Claude Code** (Claude Desktop's Code tab, the CLI, or an IDE extension), signed in | Runs the setup | You can start a Code session in a folder | Install from claude.ai/download |
 | **Git for Windows** | Claude Desktop's Code tab on Windows requires it, and it is how you clone this repo | In PowerShell: `git --version` | See "Installing Git" |
-| **Python 3.11 or newer** (install the latest, currently 3.13) | Fireflies scripts, key storage, repo tools. Not needed for `obsidian-memory` alone | In PowerShell: `python --version` | See "Installing Python" |
+| **Python 3.11 or newer** (install the latest, currently 3.13) | Setup helper scripts for every module, plus Fireflies scripts and key storage | In PowerShell: `python --version` | See "Installing Python" |
 | **Obsidian** (free) | Opens and browses the vault; Claude writes the files directly | Launch it | Install from obsidian.md (or your company portal) |
 | **Access to this repo** | It is private while under review | You can open it on GitHub | Ask the maintainer |
 
@@ -40,7 +40,7 @@ If the Store is blocked on your machine, ask IT or install the latest Python fro
 
 | Module | Prerequisites | Packages (installed by BOOTSTRAP) | Secrets |
 |---|---|---|---|
-| `obsidian-memory` | None beyond the table above | None | None |
+| `obsidian-memory` | Python 3.11+ | None | None |
 | `fireflies` | Python 3.11+, `obsidian-memory` | `requests`, `keyring` (see `modules/fireflies/requirements.txt`) | `fireflies_api_key`, which you store yourself |
 
 Maintainers only: `pip install -r tools/requirements.txt` (`pyyaml`) to run `tools/validate_manifests.py`.

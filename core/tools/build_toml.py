@@ -1,10 +1,18 @@
 """Build a module's ~/.claude-harness/<module>.toml from its defaults plus overrides.
 
 Usage:
-    python build_toml.py <defaults.toml> <out.toml> [--set KEY=VALUE ...] [--ph KEY=VALUE ...]
+    python build_toml.py <defaults.toml> <out.toml> [--base existing.toml]
+                         [--ph-from other.toml:NAME ...] [--set KEY=VALUE ...] [--ph KEY=VALUE ...]
 
-    --set  sets a key in [settings]     (e.g. --set my_email=you@example.com)
-    --ph   sets a key in [placeholders] (e.g. --ph VAULT_PATH=C:/Users/<you>/Vault)
+    --base     start from an existing toml: its values are kept, and keys that exist only in
+               defaults.toml are added. Use this to tailor or update without re-typing values.
+               <out.toml> may be the same file as --base.
+    --ph-from  copy placeholder NAME from another module's toml, if it has it
+               (e.g. --ph-from ~/.claude-harness/obsidian-memory.toml:SENSITIVITY_RULES)
+    --set      sets a key in [settings]     (e.g. --set my_email=you@example.com)
+    --ph       sets a key in [placeholders] (e.g. --ph VAULT_PATH=C:/Users/<you>/Vault)
+
+Order of precedence (last wins): defaults, --base, --ph-from, --set / --ph.
 
 Values are strings. A `--set` value that is valid JSON (a number, true/false, or a list)
 is stored as that type, for example --set 'skip_title_patterns=["lunch"]'. Requires Python 3.11+.
@@ -60,6 +68,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("defaults")
     ap.add_argument("out")
+    ap.add_argument("--base")
+    ap.add_argument("--ph-from", action="append", default=[], dest="ph_from")
     ap.add_argument("--set", action="append", default=[], dest="settings")
     ap.add_argument("--ph", action="append", default=[], dest="placeholders")
     args = ap.parse_args()
@@ -67,6 +77,17 @@ def main() -> int:
     base = tomllib.loads(Path(args.defaults).read_text(encoding="utf-8"))
     settings = dict(base.get("settings", {}))
     placeholders = dict(base.get("placeholders", {}))
+    if args.base:
+        existing = tomllib.loads(Path(args.base).read_text(encoding="utf-8"))
+        settings.update(existing.get("settings", {}))
+        placeholders.update(existing.get("placeholders", {}))
+    for ref in args.ph_from:
+        path, _, name = ref.rpartition(":")
+        if not path or not name:
+            sys.exit(f"Bad --ph-from (expected FILE:NAME): {ref}")
+        other = tomllib.loads(Path(path).read_text(encoding="utf-8")).get("placeholders", {})
+        if name in other:
+            placeholders[name] = other[name]
     settings.update(parse_pairs(args.settings, typed=True))
     placeholders.update(parse_pairs(args.placeholders, typed=False))
 
