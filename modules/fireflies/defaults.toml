@@ -1,0 +1,39 @@
+# Defaults for the fireflies module. BOOTSTRAP copies these into
+# ~/.claude-harness/fireflies.toml and overrides the computed or answered values
+# (STATE_DIR, my_email, python). The user can reshape any of this later through tailor.md.
+
+[settings]
+lookback_days = 7
+skip_title_patterns = []
+
+[placeholders]
+MEETING_TYPES = """
+- **Client meeting** — a meeting with people outside the company; external attendees or a client name in the title.
+- **Internal meeting** — status, planning, or working sessions with colleagues only.
+- **1:1** — two attendees; "1:1" or "check-in" in the title.
+- **General** — anything else.
+"""
+
+OUTPUT_SECTIONS = """
+1. **Summary** — exactly three sentences: what was discussed and what was concluded.
+2. **Decisions** — each confirmed decision as a bullet starting with `Decision:`. Include only decisions actually agreed. If none: "No decisions recorded."
+3. **Action items** — `- [Owner] — [Action] — [Due]`. Omit the due date if none was stated; never invent one. If none: "No action items recorded."
+4. **Risks** — client meetings only: each risk, marked stated or inferred. Omit this section for other meeting types. If none: "No risks raised."
+5. **Parking lot** — topics raised but deferred. If none: "Nothing parked."
+"""
+
+DATE_RULES = "Convert relative date phrases to `YYYY-MM-DD` anchored to the meeting date, keeping the speaker's exact phrase in quotes, for example 2026-03-13 (\"EOW\"). \"EOD\" or \"today\" is the meeting date; \"EOW\" or \"by Friday\" is that week's Friday; \"by <weekday>\" or a bare weekday is the nearest upcoming one; \"next <weekday>\" is that weekday in the following Monday-to-Sunday week; \"end of month\" is the last business day of the month. Vague references with no calendar anchor (\"next month\", \"soon\", \"after the holidays\") are not converted: write the phrase and \"date unclear — confirm\"."
+
+PEOPLE_RULES = "Label speakers who cannot be identified as \"Unidentified speaker\" and mark any identification you infer from context with \"(inferred)\"."
+
+STYLE_RULES = "Terse bullets with no filler; the summary is three plain sentences."
+
+SKIP_RULES = "No meetings are skipped by default."
+
+NOTES_FOLDER = "50 - Meetings/<Client or Internal>"
+
+RAW_TRANSCRIPT_RULE = "Save the full transcript as a note in `50 - Meetings/Transcripts` and link it from the meeting note."
+
+TAG_RULES = "Use `client/<shortname>` for a recognized client and `client/internal` otherwise, plus any `tool/` tags that clearly apply."
+
+SENSITIVITY_RULES = "Anything that looks like client-confidential, financial, or personal data, including patient information."

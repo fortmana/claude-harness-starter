@@ -4,7 +4,7 @@ Report pass/fail honestly for each.
 
 ## File checks (run right after install, before restarting)
 
-1. The vault path exists and contains the folders from the interview, including `00 - Inbox` and `80 - Templates`.
+1. The vault path exists and contains the default folders, including `00 - Inbox` and `80 - Templates`.
 2. `80 - Templates` contains `meeting.md`, `decision.md`, `reference.md`, `person.md`, `daily.md`, `action-item.md`, `note.md`.
 3. `~/.claude/skills/obsidian-note-router/SKILL.md` exists and contains no unreplaced `{{...}}` placeholders.
 4. The CLAUDE.md file that received the block contains the vault path and no unreplaced `{{...}}` placeholders.

@@ -14,6 +14,8 @@ installs:
   scripts: [poll.py, schedule_windows.ps1]
   scheduled_tasks: [ClaudeHarness-FirefliesPoll]
 interview: interview.md
+defaults: defaults.toml
+tailor: tailor.md
 verify: verify.md
 ---
 
@@ -21,7 +23,7 @@ verify: verify.md
 
 ## What it does
 
-Polls the Fireflies API for new transcripts, saves each locally as a JSON package, and processes them through a `meeting-review` skill whose output is generated from **your** answers to a short interview: meeting types, what you need from each meeting (decisions, action items, risks, and so on), date and name handling, where notes go, and what to skip. Processing runs inside Claude Code, so no separate Anthropic API key is needed.
+Polls the Fireflies API for new transcripts, saves each locally as a JSON package, and processes them through a `meeting-review` skill that ships with a sensible default summary (three-sentence summary, decisions, action items, risks for client meetings, parking lot). Setup asks one question (your email). Afterward Claude offers an optional conversation to tailor the summary: it shows the default on one of your real meetings and you say what to change. Processing runs inside Claude Code, so no separate Anthropic API key is needed.
 
 ## What it changes on your machine
 

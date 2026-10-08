@@ -1,29 +1,23 @@
-# obsidian-memory — interview
+# obsidian-memory — base questions
 
-Ask these in one batch. Save the answers to `~/.claude-harness/obsidian-memory.toml`, then use them to fill the `{{PLACEHOLDERS}}` in the skill and CLAUDE.md block.
+Ask only this. Everything else comes from `defaults.toml`. Clients, tools, topics, and projects start empty and are added by the router skill as they come up; folder changes and tag taxonomy are handled by the optional tailoring step (`tailor.md`).
 
-1. **Vault path.** Where is your Obsidian vault (or where should it be created)? Prefer a local folder outside cloud-sync folders. If it must be in OneDrive or a similar sync folder, note it. -> `{{VAULT_PATH}}`
-2. **Clients or contexts.** What clients, customers, or contexts do you work with? Give short names. If none, say "internal only". -> `{{CLIENT_FOLDERS}}`, `{{CLIENT_TAGS}}` (as `client/<shortname>`, lowercase, no spaces)
-3. **Projects.** Any active projects to seed folders for? (Optional.)
-4. **Tools and technologies.** Which tools or technologies will your notes mention often? -> `{{TOOL_TAGS}}` (as `tool/<name>`)
-5. **Reference topics.** What subjects will you want reusable how-to notes about? -> `{{REFERENCE_TOPICS}}`
-6. **Sensitivity.** What counts as sensitive in your work (client-confidential data, personal data, regulated data such as health or financial information)? -> `{{SENSITIVITY_RULES}}`
-7. **Folder changes.** The default folder set is below. Want to rename, add, or drop any? (`00 - Inbox` and `80 - Templates` are required.) If anything changes, edit the skill's folder table, routing rules, and the CLAUDE.md block so they all agree.
+1. **Vault location.** Ask: "Where should your Obsidian vault live? If you already have one, give me its path. Otherwise I'd suggest `~/Documents/Vault` (a local folder outside OneDrive or other sync folders works best)." Resolve to an absolute path with forward slashes. -> `{{VAULT_PATH}}`.
+   - If the folder already exists and contains notes, do not restructure it. Create only missing folders and the templates, and say so in the plan.
 
-   `00 - Inbox`, `10 - Clients`, `20 - Internal`, `30 - Projects`, `40 - Reference`, `50 - Meetings`, `60 - People`, `70 - Daily Notes`, `80 - Templates`, `99 - Archive`
-8. **Existing vault?** If a vault with notes already exists, do not restructure it. Create only missing folders and the templates, and offer to adapt the routing rules to the existing layout.
+## Computed, not asked
 
-## Placeholder formats (write these into `[placeholders]` in `~/.claude-harness/obsidian-memory.toml`)
+- Which CLAUDE.md receives the block: default `~/.claude/CLAUDE.md`; mention it in the plan so the user can change it.
+
+## Placeholder formats (used by `defaults.toml` and when tailoring)
 
 | Placeholder | Format | Example |
 |---|---|---|
 | `VAULT_PATH` | Absolute path, forward slashes | `C:/Users/<you>/Documents/Vault` |
-| `CLIENT_FOLDERS` | Comma-separated folder names | `Acme Health, Northwind Clinics` |
-| `CLIENT_TAGS` | Space-separated backticked tags, lowercase | `` `client/acme` `client/northwind` `` |
+| `CLIENT_FOLDERS` | Comma-separated folder names (or the default sentence) | `Acme Health, Northwind Clinics` |
+| `CLIENT_TAGS` | Space-separated backticked tags, lowercase (may be empty) | `` `client/acme` `client/northwind` `` |
 | `TOOL_TAGS` | Space-separated backticked tags | `` `tool/python` `tool/excel` `` |
-| `REFERENCE_TOPICS` | Comma-separated | `Denials, Excel tips, Python` |
+| `REFERENCE_TOPICS` | Comma-separated (or the default sentence) | `Denials, Excel tips, Python` |
 | `SENSITIVITY_RULES` | One sentence ending with a period | `Anything with patient information or client financials.` |
 
 `[settings]` for this module has no required keys. Client folders use the full name (`Acme Health`); `client:` frontmatter and `client/...` tags use the lowercase shortname (`acme`).
-
-Defaults when the user has no preference: tags `client/internal`, no seeded projects, no tool tags, sensitivity "client-confidential or personal data".

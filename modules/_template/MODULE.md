@@ -13,7 +13,9 @@ installs:
   templates: []            # files under this module's templates/ (e.g. note templates)
   scripts: []              # files under this module's scripts/
   scheduled_tasks: []      # always requires explicit opt-in
-interview: interview.md    # questions that parameterize the module (or omit)
+interview: interview.md    # ONLY the few base questions that cannot be defaulted
+defaults: defaults.toml    # default [settings] and [placeholders]; everything else comes from here
+tailor: tailor.md          # optional conversational tailoring offered after install (or omit)
 verify: verify.md          # steps proving it works
 ---
 

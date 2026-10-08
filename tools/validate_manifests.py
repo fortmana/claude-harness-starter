@@ -74,7 +74,7 @@ def check(path: Path, all_names: set[str]) -> list[str]:
         if f"## {sec}" not in body:
             errs.append(f"missing section '## {sec}'")
     if meta["status"] != "planned" and not is_template:
-        for ref in ("interview", "verify"):
+        for ref in ("interview", "verify", "defaults", "tailor"):
             if meta.get(ref) and not (mod_dir / meta[ref]).exists():
                 errs.append(f"'{ref}' file '{meta[ref]}' not found")
         inst = meta["installs"]
@@ -90,14 +90,19 @@ def check(path: Path, all_names: set[str]) -> list[str]:
         for scr in inst.get("scripts", []):
             if not (mod_dir / "scripts" / scr).exists():
                 errs.append(f"script '{scr}' missing in scripts/")
-        # every {{PLACEHOLDER}} used by the module must be defined in the interview
+        # every {{PLACEHOLDER}} used by the module must have a default or be named in the interview
         interview = (mod_dir / meta["interview"]).read_text(encoding="utf-8") if meta.get("interview") else ""
+        defaults_keys: set[str] = set()
+        if meta.get("defaults") and (mod_dir / meta["defaults"]).exists():
+            import tomllib
+            d = tomllib.loads((mod_dir / meta["defaults"]).read_text(encoding="utf-8"))
+            defaults_keys = set(d.get("placeholders", {}))
         used = set()
         for f in list((mod_dir / "skills").rglob("*.md")) + list((mod_dir / "claude-md").glob("*.md")):
             used |= set(PLACEHOLDER.findall(f.read_text(encoding="utf-8")))
         for ph in sorted(used):
-            if "{{" + ph + "}}" not in interview:
-                errs.append(f"placeholder {{{{{ph}}}}} is used but not defined in {meta.get('interview', 'an interview')}")
+            if ph not in defaults_keys and ph not in interview:
+                errs.append(f"placeholder {{{{{ph}}}}} has no default in defaults.toml and is not named in the interview")
     return [f"{path}: {e}" for e in errs]
 
 

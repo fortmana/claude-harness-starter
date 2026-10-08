@@ -1,0 +1,13 @@
+# Defaults for the obsidian-memory module. BOOTSTRAP copies these into
+# ~/.claude-harness/obsidian-memory.toml and overrides VAULT_PATH with the user's answer.
+# Clients, tools, and topics start empty: the router skill adds them as they appear,
+# or the user can add them through tailor.md.
+
+[settings]
+
+[placeholders]
+CLIENT_FOLDERS = "none yet; create a folder under `10 - Clients` the first time a client comes up"
+CLIENT_TAGS = ""
+TOOL_TAGS = "`tool/<name>` (add tags as tools come up)"
+REFERENCE_TOPICS = "none yet; create a subfolder the first time a topic comes up"
+SENSITIVITY_RULES = "Anything that looks like client-confidential, financial, or personal data, including patient information."

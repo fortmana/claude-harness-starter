@@ -14,6 +14,8 @@ installs:
   scripts: []
   scheduled_tasks: []
 interview: interview.md
+defaults: defaults.toml
+tailor: tailor.md
 verify: verify.md
 ---
 
@@ -23,25 +25,27 @@ verify: verify.md
 
 Sets up a vault folder skeleton, a note-router skill that classifies, tags, names, and files notes, and a CLAUDE.md block with capture and retrieval rules. Claude uses its built-in file tools, so no MCP server, Node.js, or Python is required. Writes are autonomous: Claude reports the path and tags afterward and confirms only before overwriting or deleting a note.
 
+Setup asks one question (where the vault lives) and uses defaults for everything else. Afterward Claude offers an optional conversation to tailor the vault: it shows the default structure and you say what to change.
+
 Consistent frontmatter and tags written at capture time are what make retrieval reliable. There is no search index to build.
 
 ## What it changes on your machine
 
-- Creates (if missing) the vault folders chosen in the interview, and the seven note templates in `80 - Templates`. Existing notes are never moved or modified.
-- Copies one skill folder to `~/.claude/skills/obsidian-note-router/` with your interview answers filled in.
+- Creates (if missing) the default vault folders, and the seven note templates in `80 - Templates`. Existing notes are never moved or modified.
+- Copies one skill folder to `~/.claude/skills/obsidian-note-router/` with your vault path and the module defaults filled in.
 - Appends one block to the CLAUDE.md file you choose (`~/.claude/CLAUDE.md` for all sessions, or a project CLAUDE.md), with your vault path filled in.
-- Writes your interview answers to `~/.claude-harness/obsidian-memory.toml`.
+- Writes your vault path and defaults to `~/.claude-harness/obsidian-memory.toml`.
 
 Nothing else changes. No scheduled tasks, settings edits, packages, or secrets.
 
 ## Setup notes
 
 1. Install Obsidian from obsidian.md and create (or choose) a vault; open it once so Obsidian initializes it.
-2. Run the interview (`interview.md`). Fill the `{{PLACEHOLDERS}}` in the skill and CLAUDE.md block from the answers.
+2. Ask the base question in `interview.md` (vault location); take everything else from `defaults.toml`. Fill the `{{PLACEHOLDERS}}` in the skill and CLAUDE.md block.
 3. Create missing folders and copy templates from `templates/` into `80 - Templates`.
 4. Show the user the install plan, then copy the skill and append the CLAUDE.md block.
 5. Recommend a backup: the Obsidian Git plugin or a Git repo in the vault folder, since Claude can edit many files at once.
-6. Run `verify.md` in a new session.
+6. Run `verify.md` in a new session, then offer the optional tailoring conversation (`tailor.md`).
 
 Optional extras (do not install unless asked): Obsidian Git, Dataview, and the Local REST API plugin (only needed for backlink-safe moves and live-app operations; not required for this module).
 

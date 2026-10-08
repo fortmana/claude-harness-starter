@@ -1,34 +1,36 @@
 # BOOTSTRAP — Instructions for Claude
 
-You are setting up one or more modules from this repo for the user. Follow these steps in order. Be concise. **Until the user approves the plan in step 5, change nothing outside this repo: no installs, no files, no settings.** Hold interview answers in the conversation until then.
+You are setting up one or more modules from this repo for the user. Follow these steps in order. Be concise. **Until the user approves the plan in step 5, change nothing outside this repo: no installs, no files, no settings.** Hold answers in the conversation until then.
+
+The install itself should feel like an installer: ask very little (a couple of base questions), use the module defaults for everything else, and then **offer** an optional tailoring conversation once things work.
 
 ## Ground rules
 
 - Install only the modules the user selects, plus modules they require (offer, do not force).
 - Never ask the user to paste an API key or secret into this chat. Give them the exact command to run in their own terminal (step 7). If a key appears in chat, tell them to rotate it.
 - Never register scheduled tasks or edit Claude Code settings files without explicit opt-in for that specific action. Do not copy `schedule_*` scripts unless the user opts in to scheduling.
-- Read only the selected modules' `MODULE.md` files, not every module.
-- Write user-specific answers to `~/.claude-harness/`, never into the repo.
+- Read only the selected modules' `MODULE.md` files (and the files they point to), not every module.
+- Write user-specific values to `~/.claude-harness/`, never into the repo.
 - Use forward slashes in paths you write into TOML, skills, and CLAUDE.md (for example `C:/Users/<you>/Vault`), even on Windows. In PowerShell commands you give the user, use `$HOME\.claude-harness\...` rather than `~`.
+- Do not turn setup into a form. Never read a long list of questions at the user. Tailoring (step 9) works by showing a result and asking what they would change.
 
 ## Terms
 
 - **`~`** is the user's home folder (`$HOME`; `%USERPROFILE%` on Windows).
-- **State folder** is where a module keeps its scripts and downloaded data (for example `~/.claude-harness/fireflies/`). Say "state folder" to the user and explain it once in plain words: "where Claude keeps the scripts and downloaded transcripts."
+- **State folder** is where a module keeps its scripts and downloaded data (for example `~/.claude-harness/fireflies/`). Explain it once in plain words: "where Claude keeps the scripts and downloaded transcripts."
 
 ## Files Claude writes under `~/.claude-harness/`
 
-`<module>.toml` — one per module:
+`<module>.toml` — one per module, built from the module's `defaults.toml` plus the user's answers and computed values:
 
 ```toml
 [settings]            # real configuration read by scripts
 my_email = "you@example.com"
 state_dir = "C:/Users/<you>/.claude-harness/fireflies"
-python = "C:/Python312/python.exe"
+python = "C:/Python313/python.exe"
 
 [placeholders]        # the text substituted into the module's skill and CLAUDE.md block
 VAULT_PATH = "C:/Users/<you>/Documents/Vault"
-CLIENT_TAGS = "`client/acme` `client/northwind`"
 OUTPUT_SECTIONS = """
 1. **Summary** ...
 """
@@ -47,17 +49,16 @@ Use forward slashes or single-quoted literal strings for paths. Keep every `{{NA
 1. **Detect environment.** Run `git --version` and `python --version` (on Windows also `python -c "import sys; print(sys.executable)"` to get the real interpreter path; record it with forward slashes, since it prints backslashes and may be an 8.3 short path). Report OS, Git, Python version and path, and whether `~/.claude` and `~/.claude/skills` exist (you create them in step 6 if missing). Do not install anything. If Git is missing, or Python is missing when a selected module needs it (typing `python` and having the Microsoft Store open means it is not installed), **stop and give the user the matching instructions from `REQUIREMENTS.md`** ("Installing Git" or "Installing Python"). They install it themselves; you wait, then re-run the detection. Never try to install Git or Python yourself.
 2. **Choose modules.** List modules from `modules/*/MODULE.md` (skip `_template`) with their one-line summaries. Ask which the user wants. For each selection read `requires_modules`; if a required module is not selected (or installed per `installed.json`), explain why and offer to add it.
 3. **Check prerequisites.** Compare each selected module's `prerequisites` and `python_packages` against step 1 and `REQUIREMENTS.md`. List what is missing. If Python is older than a module requires, send the user to "Installing Python" in `REQUIREMENTS.md`. Use the user's own Python by default (not a throwaway venv) because the user will run scripts such as key setup in their own terminal with the same interpreter. If they prefer a venv, record its interpreter as `python` in the module's settings and use it consistently.
-4. **Interview.** Read the selected modules' `interview` files and merge them into **one** de-duplicated round of questions, grouped (for example "About your vault", "About your meetings"). Ask each overlapping question once (sensitivity, clients, tools). Do not ask about the state folder; use the default and just tell the user where it is. Also ask which CLAUDE.md should receive the module blocks: `~/.claude/CLAUDE.md` (all sessions, the default) or a project one. Skip questions already answered by an installed module's toml and reuse that module's values by **copying them into the new module's `[placeholders]`**. Do not fill in answers for the user. Hold the answers; do not write files yet.
-5. **Show the plan and get approval.** Present, per module: packages to install, files to create, skills to copy to `~/.claude/skills`, templates, CLAUDE.md blocks to append (and which CLAUDE.md file), the text you generated for each placeholder that shapes output (for example the "What to produce" section of a skill, so the user can correct it), and secrets the module needs (names only). List scheduled tasks and settings edits as separate opt-ins. Wait for approval.
+4. **Base questions.** Read each selected module's `interview` file. It contains only the few questions that cannot be defaulted (for example vault location, your email). Ask them together in one short message, de-duplicating any overlap. Do not ask anything else; take everything else from the module's `defaults.toml`. Compute the rest (state folder, Python path), and reuse values from an installed module's toml by **copying them into the new module's `[placeholders]`**. Default the CLAUDE.md target to `~/.claude/CLAUDE.md`. Hold the answers; do not write files yet.
+5. **Show the plan and get approval.** Keep it short. Per module: packages to install, files to create, skills to copy to `~/.claude/skills`, templates, CLAUDE.md blocks to append (and which file), and secrets the module needs (names only). Summarize the default behavior in a few lines (for example for meetings: "notes get a 3-sentence summary, decisions, action items, risks for client meetings, and a parking lot; you can reshape this after setup"). List scheduled tasks and settings edits as separate opt-ins. Wait for approval.
 6. **Execute** only the approved steps:
-   - Create `~/.claude/skills` if missing. When adding to an existing CLAUDE.md, append; never overwrite or reorder what is there. Write `~/.claude-harness/<module>.toml`.
+   - Create `~/.claude/skills` if missing. When adding to an existing CLAUDE.md, append; never overwrite or reorder what is there. Write `~/.claude-harness/<module>.toml` (defaults, then answers and computed values on top).
    - Fill every `{{PLACEHOLDER}}` from `[placeholders]` before copying anything, using `python core/tools/fill_placeholders.py <template> <toml> <output>` when Python is available (otherwise by hand). Never copy a file that still contains `{{...}}`.
    - Copy `templates/` files and scripts where the module's `MODULE.md` says. If a module declares `secrets`, also copy `core/secrets/harness_secrets.py` into the same folder as its scripts and `requirements.txt` into the state folder.
-   - If folders from the default set were renamed, added, or dropped, edit the skill's folder table, routing rules, and CLAUDE.md block consistently.
    - Install packages with the recorded Python: `<python> -m pip install -r requirements.txt`.
-7. **File checks.** Run the file checks section of each module's `verify`. If a module needs a secret, **stop and give the user the exact command for their shell** (for example, PowerShell: `cd $HOME\.claude-harness\fireflies; <python> harness_secrets.py set fireflies_api_key`, using the same Python recorded in settings). Wait until they confirm it is stored, then run the checks that need it. Report pass/fail honestly; never claim success on a failed check.
+7. **File checks.** Run the file checks section of each module's `verify`. If a module needs a secret, **stop and give the user the exact command for their shell** (for example, PowerShell: `cd $HOME\.claude-harness\fireflies; & "<python>" harness_secrets.py set fireflies_api_key`, using the same Python recorded in settings). Wait until they confirm it is stored, then run the checks that need it. Report pass/fail honestly; never claim success on a failed check.
 8. **Record.** Write or update `~/.claude-harness/installed.json`.
-9. **Restart and behavior checks.** Tell the user to start a new Claude Code session (skills and CLAUDE.md load at session start), run the behavior checks in each module's `verify`, and point them to each module's "How to remove it" section.
+9. **Restart, then offer tailoring.** Tell the user to start a new Claude Code session (skills and CLAUDE.md load at session start) and run the behavior checks in each module's `verify`. Then, for each installed module that has a `tailor` file, **offer** (once) to help tailor it: "Want help tailoring this? I'll show you what the default looks like and you tell me what to change, or you can use it as is." If they say yes, follow that module's `tailor.md`. If they say no, stop and tell them they can ask any time. Point them to each module's "How to remove it" section.
 
 ## Adding a module later
 
