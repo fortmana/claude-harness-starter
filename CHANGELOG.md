@@ -1,6 +1,6 @@
 # Changelog
 
-Per-module versions are in each `MODULE.md`. To update an installed module, see "Updating a module" in `BOOTSTRAP.md`.
+Per-module versions are in each `MODULE.md`. Tag each entry with the module and version it applies to, for example `[fireflies 0.1.1]`; repo-wide entries use `[repo]`. To update an installed module, see "Updating a module" in `BOOTSTRAP.md`.
 
 ## Unreleased
 

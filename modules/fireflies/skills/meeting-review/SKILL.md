@@ -11,7 +11,7 @@ description: >
 # Meeting Review
 
 Turns a transcript into a standardized meeting note that contains what matters to this user. The structure
-below was generated from the user's setup interview; edit it any time the notes stop being useful.
+below started from the module defaults and any tailoring the user asked for; edit it any time the notes stop being useful.
 
 ## Inputs
 

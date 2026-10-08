@@ -41,8 +41,8 @@ Polls the Fireflies API for new transcripts, saves each locally as a JSON packag
 
 1. Sign in at app.fireflies.ai, open **Settings**, then the **MCP & API** screen, and copy your API key.
 2. In **your own terminal** (not through Claude), run the command Claude gives you with your real paths. It looks like this:
-   - PowerShell: `cd $HOME\.claude-harness\fireflies; & "<python>" -m pip install -r requirements.txt; & "<python>" harness_secrets.py set fireflies_api_key` (keep the `& "..."` form; it works when the path has spaces)
-   - macOS/Linux: `cd ~/.claude-harness/fireflies && <python> -m pip install -r requirements.txt && <python> harness_secrets.py set fireflies_api_key`
+   - PowerShell: `cd $HOME\.claude-harness\fireflies; & "<python>" harness_secrets.py set fireflies_api_key` (keep the `& "..."` form; it works when the path has spaces)
+   - macOS/Linux: `cd ~/.claude-harness/fireflies && <python> harness_secrets.py set fireflies_api_key`
    
    Paste the key at the hidden prompt. Use the **same Python** that Claude recorded as `python` in `fireflies.toml`, because `poll.py` and the scheduled task must use the interpreter that has `keyring` installed.
 3. If you pasted the key anywhere else (a chat, a file), generate a new key in Fireflies and update the stored one.

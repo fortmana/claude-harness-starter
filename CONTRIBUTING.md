@@ -52,4 +52,4 @@ If your module relies on a value another module owns (for example `fireflies` fi
 
 ## Versioning
 
-Bump `version` in `MODULE.md` when behavior changes, and add a line to `CHANGELOG.md`. Use `0.x` while a module is `alpha`.
+Bump `version` in `MODULE.md` when behavior changes, and add a `CHANGELOG.md` line tagged with the module and version (for example `[fireflies 0.1.1]`). Use `0.x` while a module is `alpha`.
