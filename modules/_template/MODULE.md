@@ -33,6 +33,10 @@ List every file created, package installed, settings edit, and scheduled task. N
 
 Anything Claude or the user needs beyond the manifest (for example, where to retrieve a key on the provider's website).
 
+## Depends on settings from other modules
+
+Omit if none. List each module, the setting you rely on (for example a folder name), and what to update here if the user changes it. The owning module's `tailor.md` must tell Claude to update dependents.
+
 ## How to remove it
 
 Exact steps to uninstall: delete skills, remove CLAUDE.md block, unregister tasks, delete the keyring entry, remove local config.

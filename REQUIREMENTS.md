@@ -1,6 +1,6 @@
 # Requirements
 
-What you need before running `BOOTSTRAP.md`, and what each module adds. Windows is the tested platform.
+What you need before running `BOOTSTRAP.md`, and what each module adds. Windows is the tested platform; macOS and Linux have had less testing.
 
 ## Before you start (once per machine)
 

@@ -51,6 +51,10 @@ Optional extras (do not install unless asked): Obsidian Git, Dataview, and the L
 
 If the vault is in a cloud-sync folder, keep every search scoped to a subfolder; recursive scans from a sync root can force cloud-only files to download.
 
+## Settings other modules depend on
+
+- `fireflies` writes meeting notes into `50 - Meetings` and transcripts into `50 - Meetings/Transcripts`. If you rename or drop `50 - Meetings`, update the `fireflies` placeholders `NOTES_FOLDER` and `RAW_TRANSCRIPT_RULE` (see `tailor.md` step 3).
+
 ## How to remove it
 
 1. Delete `~/.claude/skills/obsidian-note-router/`.
