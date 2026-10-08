@@ -59,6 +59,10 @@ BOOTSTRAP copies `core/secrets/harness_secrets.py` into the state folder next to
 - Only polling is scheduled. Run "process my meetings" in a Claude Code session to turn pending transcripts into notes.
 - Unattended processing with `claude -p` is possible but out of scope for v0.1; it requires granting write permissions to a headless session, so treat it as an advanced, explicit opt-in.
 
+## Depends on settings from other modules
+
+- **`obsidian-memory`**: the vault path (`VAULT_PATH`) and the `50 - Meetings` folder (used by `NOTES_FOLDER` and `RAW_TRANSCRIPT_RULE` in `defaults.toml`). If the user renames or drops that folder while tailoring the vault, update both placeholders here and re-fill the `meeting-review` skill.
+
 ## How to remove it
 
 1. If scheduled: `schedule_windows.ps1 -Remove` (Windows) or delete the cron/launchd entry.

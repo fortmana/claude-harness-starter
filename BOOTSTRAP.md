@@ -60,6 +60,15 @@ Use forward slashes or single-quoted literal strings for paths. Keep every `{{NA
 8. **Record.** Write or update `~/.claude-harness/installed.json`.
 9. **Restart, then offer tailoring.** Tell the user to start a new Claude Code session (skills and CLAUDE.md load at session start) and run the behavior checks in each module's `verify`. Then, for each installed module that has a `tailor` file, **offer** (once) to help tailor it: "Want help tailoring this? I'll show you what the default looks like and you tell me what to change, or you can use it as is." If they say yes, follow that module's `tailor.md`. If they say no, stop and tell them they can ask any time. Point them to each module's "How to remove it" section.
 
+## Updating a module
+
+When the user asks to update, or the repo has a newer version (see `CHANGELOG.md` and each `MODULE.md` `version`):
+
+1. Read `~/.claude-harness/installed.json` and compare versions. Summarize what changed from `CHANGELOG.md`.
+2. Re-use the user's existing `~/.claude-harness/<module>.toml`; do not re-ask questions. Add any new `[placeholders]` or `[settings]` keys from the module's `defaults.toml`, and never overwrite values the user has set.
+3. Show the plan (which installed skills and CLAUDE.md blocks will be replaced) and wait for approval. Replace the installed skill folder and the module's block in CLAUDE.md in place; do not append a duplicate block.
+4. Re-run the module's file checks, update `installed.json`, and tell the user to start a new session.
+
 ## Adding a module later
 
 Re-run this file. Read `installed.json`, skip installed modules, reuse existing `[placeholders]`, and run steps 2-9 for the new one.
