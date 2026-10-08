@@ -4,9 +4,11 @@ Opt-in starter modules for getting useful Claude Code setups running quickly. Pi
 
 ## Quick start
 
-1. Install and sign in to [Claude Code](https://docs.claude.com/en/docs/claude-code).
-2. Clone this repo and open Claude Code in it.
+1. Check [REQUIREMENTS.md](REQUIREMENTS.md): you need Claude Code (signed in) and Git; modules like `fireflies` also need Python 3.11+. It includes step-by-step install instructions for Git and Python.
+2. Clone this repo (or download it as a ZIP) and open that folder in Claude Code (in Claude Desktop, use the Code tab).
 3. Tell Claude: **"Follow BOOTSTRAP.md."**
+
+See [docs/example-session.md](docs/example-session.md) for what the conversation looks like.
 
 Claude asks which modules you want, interviews you once, shows exactly what it will change, and only then installs them. Some modules depend on others (for example `fireflies` writes into the `obsidian-memory` vault); Claude will offer to add what is needed.
 
