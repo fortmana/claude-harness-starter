@@ -1,5 +1,5 @@
-# Defaults for the fireflies module. BOOTSTRAP copies these into
-# ~/.claude-harness/fireflies.toml and overrides the computed or answered values
+# Defaults for the fireflies module. BOOTSTRAP builds ~/.claude-harness/fireflies.toml
+# from these with core/tools/build_toml.py, overriding the computed or answered values
 # (STATE_DIR, my_email, python). The user can reshape any of this later through tailor.md.
 
 [settings]

@@ -41,13 +41,13 @@ Polls the Fireflies API for new transcripts, saves each locally as a JSON packag
 
 1. Sign in at app.fireflies.ai, open **Settings**, then the **MCP & API** screen, and copy your API key.
 2. In **your own terminal** (not through Claude), run the command Claude gives you with your real paths. It looks like this:
-   - PowerShell: `cd $HOME\.claude-harness\fireflies; & "<python>" -m pip install -r requirements.txt; & "<python>" harness_secrets.py set fireflies_api_key` (keep the `& "..."` form; it works when the path has spaces)
-   - macOS/Linux: `cd ~/.claude-harness/fireflies && <python> -m pip install -r requirements.txt && <python> harness_secrets.py set fireflies_api_key`
+   - PowerShell: `cd $HOME\.claude-harness\fireflies; & "<python>" harness_secrets.py set fireflies_api_key` (keep the `& "..."` form; it works when the path has spaces)
+   - macOS/Linux: `cd ~/.claude-harness/fireflies && <python> harness_secrets.py set fireflies_api_key`
    
    Paste the key at the hidden prompt. Use the **same Python** that Claude recorded as `python` in `fireflies.toml`, because `poll.py` and the scheduled task must use the interpreter that has `keyring` installed.
 3. If you pasted the key anywhere else (a chat, a file), generate a new key in Fireflies and update the stored one.
 
-BOOTSTRAP copies `core/secrets/harness_secrets.py` into the state folder next to `poll.py` because the module declares a secret.
+BOOTSTRAP creates the state folder with its `pending/` and `processed/` subfolders, and copies `core/secrets/harness_secrets.py` next to `poll.py` because the module declares a secret.
 
 **Whose meetings does it fetch?** The Fireflies API can return transcripts from meetings you did not attend. Set `my_email` in the interview so only meetings you organized or attended are kept. Use `python poll.py --exclude <id>` to permanently skip any transcript. Use `python poll.py --dry-run` to see what would be fetched.
 

@@ -26,7 +26,7 @@ A module is a folder under `modules/<name>/`. Copy `modules/_template/` and fill
 7. **Write `verify.md`.** File checks (run right after install) and behavior checks (run in a new session). Include one check that needs no real credentials, for example a bundled sample.
 8. **Optionally write `tailor.md`.** A conversation that shows the default result and asks what to change. Never a form.
 9. **Document removal.** Exact steps, including deleting secrets and scheduled tasks.
-10. **Test it.** Run BOOTSTRAP in a fresh Claude Code session on a clean machine or folder and record what went wrong. Fix the module, not just your session.
+10. **Test it.** Run BOOTSTRAP end to end with a scripted user in a throwaway clone and a fake home folder (so nothing touches your real `~/.claude`), simulate any secret step, and write down every place the instructions were ambiguous or failed. Fix the module, not just the run.
 11. **Update docs.** Add the module to the README table and `REQUIREMENTS.md`, and add a `CHANGELOG.md` entry.
 
 ## Module folder layout
@@ -42,6 +42,8 @@ modules/<name>/
   claude-md/         CLAUDE.md blocks appended on opt-in
   templates/         note or file templates
   scripts/           scripts copied to the state folder
+  requirements.txt   Python packages (copied to the state folder and installed by BOOTSTRAP)
+  samples/           sample inputs for no-credentials behavior checks
 ```
 
 ## Cross-module settings
@@ -50,4 +52,4 @@ If your module relies on a value another module owns (for example `fireflies` fi
 
 ## Versioning
 
-Bump `version` in `MODULE.md` when behavior changes, and add a line to `CHANGELOG.md`. Use `0.x` while a module is `alpha`.
+Bump `version` in `MODULE.md` when behavior changes, and add a `CHANGELOG.md` line tagged with the module and version (for example `[fireflies 0.1.1]`). Use `0.x` while a module is `alpha`.

@@ -17,7 +17,7 @@ Each module in this repo adds one useful capability and shows how these layers f
 
 ## Quick start
 
-1. Check [REQUIREMENTS.md](REQUIREMENTS.md). You need Claude Code (signed in) and Git; modules like `fireflies` also need Python 3.11+. It has step-by-step install instructions for both.
+1. Check [REQUIREMENTS.md](REQUIREMENTS.md). You need Claude Code (signed in), Git, and Python 3.11+. It has step-by-step install instructions for Git and Python.
 2. Get this repo: clone it, or download it as a ZIP. The repo is private while under review, so if GitHub shows a 404, ask the maintainer for access first.
 3. Open the folder in Claude Code (in Claude Desktop, use the Code tab).
 4. Tell Claude: **"Follow BOOTSTRAP.md."**

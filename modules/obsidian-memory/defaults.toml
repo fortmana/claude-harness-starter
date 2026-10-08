@@ -1,5 +1,5 @@
-# Defaults for the obsidian-memory module. BOOTSTRAP copies these into
-# ~/.claude-harness/obsidian-memory.toml and overrides VAULT_PATH with the user's answer.
+# Defaults for the obsidian-memory module. BOOTSTRAP builds ~/.claude-harness/obsidian-memory.toml
+# from these with core/tools/build_toml.py and overrides VAULT_PATH with the user's answer.
 # Clients, tools, and topics start empty: the router skill adds them as they appear,
 # or the user can add them through tailor.md.
 

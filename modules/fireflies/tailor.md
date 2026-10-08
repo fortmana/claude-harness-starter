@@ -33,7 +33,7 @@ When they approve:
 
 1. Update the matching values in `[placeholders]` (and `skip_title_patterns` in `[settings]` if skip words changed) in `~/.claude-harness/fireflies.toml`.
 2. Re-fill the skill from `skills/meeting-review/SKILL.md` with `core/tools/fill_placeholders.py` and replace the installed copy. Read it back to confirm the change is present.
-3. Keep the values consistent with each other: check `MEETING_TYPES`, `OUTPUT_SECTIONS`, and the other rules (`STYLE_RULES`, `SKIP_RULES`, and so on) for any mention of what you changed (for example a summary length), and fix contradictions. For a "my action items" section, ask once how their name appears in transcripts, match owners on that, and write an empty-case line such as "Nothing for you."
+3. Keep the values consistent with each other: check `MEETING_TYPES`, `OUTPUT_SECTIONS`, and the other rules (`STYLE_RULES`, `SKIP_RULES`, and so on) for any mention of what you changed (for example a summary length), and fix contradictions. For a "my action items" section, take their name from `my_email` (for example `jordan.lee@` means owners "Jordan" or "Jordan Lee"), say that assumption in your reply so they can correct it, match owners on it, and write an empty-case line such as "Nothing for you." Do not ask a separate question for it.
 4. Tell them what changed in one or two lines and that it applies from the next new session.
 
 ## Notes
